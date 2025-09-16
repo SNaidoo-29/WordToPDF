@@ -28,16 +28,20 @@ app.post("/convert-docx-to-pdf", async (req, res) => {
     const accessToken = tokenResponse.data.access_token;
 
     // 2. Get the file as PDF
-    const pdfResponse = await axios.get(
-      `https://graph.microsoft.com/v1.0/me/drive/items/${itemId}/content`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: "application/pdf",
-        },
-        responseType: "arraybuffer", // so we get the binary PDF
-      }
-    );
+// server.js (snippet)
+const userUpn = process.env.USER_UPN; // e.g. you@yourorg.com
+
+// ...
+const pdfResponse = await axios.get(
+  `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(userUpn)}/drive/items/${itemId}/content`,
+  {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/pdf",
+    },
+    responseType: "arraybuffer",
+  }
+);
 
     res.setHeader("Content-Type", "application/pdf");
     res.send(pdfResponse.data);
