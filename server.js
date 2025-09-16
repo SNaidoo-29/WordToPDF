@@ -4,9 +4,9 @@ const axios = require("axios");
 const app = express();
 app.use(express.json());
 
-const tenantId = 06f0ceb1-3e11-4804-b0b7-2b70b7fb6d69;
-const clientId = b8d1788a-2d6b-4ee8-b1da-0955df3839a9;
-const clientSecret = 9tC8Q~56SJ0dgF73~2bERsCrpFXUyuwBMZ4d2aE1;
+const tenantId = process.env.TENANT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.post("/convert-docx-to-pdf", async (req, res) => {
   const { itemId } = req.body;
